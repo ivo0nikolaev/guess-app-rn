@@ -4,7 +4,7 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
+  // TextInput,
   Button,
   TouchableWithoutFeedback,
   Keyboard,
@@ -15,6 +15,7 @@ import Colors from "../constants/colors";
 
 import Card from "../components/Card";
 import Input from "../components/Input";
+import Number from "../components/Number";
 
 const StartGameScreen = (props) => {
   const [enteredValue, setEnteredValue] = useState("");
@@ -32,7 +33,17 @@ const StartGameScreen = (props) => {
   const confirmInputHandler = () => {
     const chosenNumber = parseInt(enteredValue);
     if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
-      Alert.alert('You done goofed?', 'Only numbers between 1 and 99 are being accepted!', [{text: 'Ok Boomer!', style: 'destructive', onPress: resetInputHandler}])
+      Alert.alert(
+        "You done goofed?",
+        "Only numbers between 1 and 99 are being accepted!",
+        [
+          {
+            text: "Ok Boomer!",
+            style: "destructive",
+            onPress: resetInputHandler,
+          },
+        ]
+      );
       return;
     }
     setConfirmed(true);
@@ -44,7 +55,13 @@ const StartGameScreen = (props) => {
   let confirmedOutput;
 
   if (confirmed) {
-    confirmedOutput = <Text> NUMBER wewqeqw</Text>;
+    confirmedOutput = (
+      <Card style={styles.summaryContainer}>
+        <Text> You have selected</Text>
+        <Number number={selectedNumber} />
+        <Button title="START GAME" />
+      </Card>
+    );
   }
 
   return (
@@ -118,6 +135,11 @@ const styles = StyleSheet.create({
   },
   confirmButton: {
     width: 100,
+  },
+  summaryContainer: {
+    marginTop: 50,
+    padding: 10,
+    alignItems: "center",
   },
 });
 
